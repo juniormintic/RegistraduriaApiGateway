@@ -12,7 +12,6 @@ from waitress import serve
 import json
 import datetime
 import requests
-import re
 
 app=Flask(__name__)
 cors=CORS(app)
@@ -27,7 +26,7 @@ def middleware():
     urlCliente = request.path
     metodoCliente=request.method
 
-    if(urlCliente=="/ligin"):
+    if(urlCliente=="/login"):
         print("la url es /login, no valido")
         pass
     else:
@@ -56,7 +55,7 @@ def middleware():
 
 @app.route("/login",methods=['POST'])
 def validarUsuario():
-    url= dataConfig['url-backend-security']+"/usuario/validar-usuario"
+    url= dataConfig['url-backend-registraduriasecurity']+"/usuario/validar-usuario"
 
     headers={ "Content-Type":"application/json" }
     bodyRequest= request.get_json()
@@ -73,14 +72,83 @@ def validarUsuario():
     else:
         print("error en validacion usuario")
         return {"mensaje":"usuario y contraseña errados"}, 401
+@app.route("/permiso-rol/rol/{id_rol}/permiso/{id_permiso}", methods=['POST'])
+def crearPermisoRol(id_rol,id_permiso):
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permiso-rol/rol/" + id_rol +"/permiso/" + id_permiso
+    headers = {"Content-Type": "application/json"}
+    response = requests.post(url, headers=headers)
+    return response.json()
 
-@app.route("/crear-estudiante", methods=['POST'])
-def crearEstudiante():
-    url = dataConfig['url-backend-academic'] + "/estudiante"
+@app.route("/permiso-rol", methods=['GET'])
+def listarPermisoRol():
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permiso-rol"
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+@app.route("/permiso-rol/<string:id>", methods=['GET'])
+def consultarPermisoRol(id):
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permiso-rol" + id
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+@app.route("/permiso-rol/<string:id>/rol/<string:idRol>/permiso/<string:idPermiso>", methods=['PUT'])
+def modificacionPermisoRol(id,idRol,idPermiso):
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permiso-rol/"+id+"/rol/"+ idRol+"/permiso/"+idPermiso
+    headers = {"Content-Type": "application/json"}
+    response = requests.put(url, headers=headers)
+    return response.json()
+
+@app.route("/permiso-rol/<string:id>", methods=['DELETE'])
+def eliminarPermisoRol(id):
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permiso-rol" + id
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+
+
+
+
+
+@app.route("/crear-partido", methods=['POST'])
+def crearPartido():
+    url = dataConfig['url-backend-registraduria'] + "/partido"
     headers = {"Content-Type": "application/json"}
     body= request.get_json()
     response = requests.post(url, json=body, headers=headers)
-    return  response.json()
+    return response.json()
+
+@app.route("/partido",methods=['GET'])
+def listaPartido():
+    url = dataConfig['url-backend-registraduria'] + "/partido"
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+@app.route("/partido/<string:id>",methods=['GET'])
+def consultaPartido(id):
+    url = dataConfig['url-backend-registraduria'] + "/partido" + id
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+
+@app.route("/partido/<string:id>",methods=['PUT'])
+def actualizarPartido(id):
+    url = dataConfig['url-backend-registraduria'] + "/partido"+ id
+    headers = {"Content-Type": "application/json"}
+    body = request.get_json()
+    response = requests.put(url,json=body, headers=headers)
+    return response.json()
+
+@app.route("/partido/<string:id>",methods=['DELETE'])
+def eliminarPartido(id):
+    url = dataConfig['url-backend-registraduria'] + "/partido"+ id
+    headers = {"Content-Type": "application/json"}
+    response = requests.delete(url, headers=headers)
+    return response.json()
+#Fin rutas Partido
 
 def loadFileConfig():
     with open('config.json') as f:
