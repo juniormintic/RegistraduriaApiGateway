@@ -402,7 +402,7 @@ def eliminarMesa(idMesa):
     response = requests.delete(url, headers=headers)
     return response.json()
 #fin rutas mesa
-#=================================================================
+#==================================================================
 def loadFileConfig():
     with open('config.json') as f:
          data = json.load(f)
