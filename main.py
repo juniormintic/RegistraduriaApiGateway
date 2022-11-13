@@ -355,6 +355,45 @@ def eliminarResultado(id):
     return response.json()
 #Fin rutas Resultado
 
+#inicio rutas Mesa
+
+@app.route("/mesa",methods=['GET'])
+def listaMesa():
+    url = dataConfig['url-backend-registraduria'] + "/mesa"
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+@app.route("/mesa/<string:idMesa>",methods=['GET'])
+def consultaMesa(idMesa):
+    url = dataConfig['url-backend-registraduria'] + "/mesa"+idMesa
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+@app.route("/mesa",methods=['POST'])
+def crearMesa():
+    url = dataConfig['url-backend-registraduria'] + "/mesa"
+    headers = {"Content-Type": "application/json"}
+    body = request.get_json()
+    response = requests.post(url, json=body, headers=headers)
+    return response.json()
+@app.route("/mesa/<string:idMesa>",methods=['PUT'])
+def actualizarMesa(idMesa):
+    url = dataConfig['url-backend-registraduria'] + "/mesa"+idMesa
+    headers = {"Content-Type": "application/json"}
+    body = request.get_json()
+    response = requests.put(url, json=body, headers=headers)
+    return response.json()
+
+@app.route("/mesa/<string:idMesa>",methods=['DELETE'])
+def eliminarMesa(idMesa):
+    url = dataConfig['url-backend-registraduria'] + "/mesa" + id
+    headers = {"Content-Type": "application/json"}
+    response = requests.delete(url, headers=headers)
+    return response.json()
+#fin rutas mesa
+#=================================================================
 def loadFileConfig():
     with open('config.json') as f:
          data = json.load(f)
