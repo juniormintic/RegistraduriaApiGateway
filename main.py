@@ -119,6 +119,48 @@ def eliminarUsuario(idUsuario):
 
 #fin rutas usuario
 ##############################################
+#inicio permiso
+
+@app.route("/permisos", methods=['GET'])
+def listarPermisos():
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permisos"
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+@app.route("/permisos", methods=['POST'])
+def crearPermisos():
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permisos"
+    headers = {"Content-Type": "application/json"}
+    body = request.get_json()
+    response = requests.post(url, json=body, headers=headers)
+    return response.json()
+
+
+@app.route("/permisos/<string:idPermiso>", methods=['GET'])
+def buscarPermiso(idPermiso):
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permisos"+idPermiso
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
+
+@app.route("/permisos/<string:idPermiso>", methods=['PUT'])
+def actualizarPermiso(idPermiso):
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permisos"+idPermiso
+    headers = {"Content-Type": "application/json"}
+    body = request.get_json()
+    response = requests.put(url, json=body, headers=headers)
+    return response.json()
+@app.route("/permisos/<string:idPermiso>", methods=['DELETE'])
+def eliminarPermiso(idPermiso):
+    url = dataConfig['url-backend-registraduriasecurity'] + "/permisos"+idPermiso
+    headers = {"Content-Type": "application/json"}
+    response = requests.delete(url, headers=headers)
+    return response.json()
+#fin permiso
+##############################################
+
+
 #Rutas Rol
 @app.route("/roles", methods=['GET'])
 def index():
