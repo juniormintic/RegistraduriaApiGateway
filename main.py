@@ -12,6 +12,7 @@ from waitress import serve
 import json
 import datetime
 import requests
+import re
 
 app=Flask(__name__)
 cors=CORS(app)
@@ -36,9 +37,12 @@ def middleware():
         infoToken= get_jwt_identity()
         idRol=infoToken["rol"]["_id"]
 
+        #  cambia numeros de la url por ?
+        urlCliente =transformarUrl(urlCliente)
+        
         urlValidarPermiso=dataConfig['url-backend-security']+"permiso-rol/validar-permiso/rol/"+idRol
         headers = {"Content-Type": "application/json"}
-        #pendiaente cambiar el url por ?
+
         bodyRequest = {
             "url":urlCliente,
             "metodo":metodoCliente
@@ -52,7 +56,12 @@ def middleware():
         else:
             return {"mensake":"permiso denegado}"}, 401
 
-
+def transformarUrl(urlCliente):
+    listaPalabra = urlCliente.split("/")
+    for palabra in listaPalabra:
+       if re.search("\\d",palabra):
+        urlCliente=urlCliente.replace(palabra, "?")
+    return urlCliente
 @app.route("/login", methods=['POST'])
 def validarUsuario():
     url= dataConfig['url-backend-registraduriasecurity']+"/usuariovalidar-usuario"
