@@ -40,7 +40,7 @@ def middleware():
         #  cambia numeros de la url por ?
         urlCliente =transformarUrl(urlCliente)
         
-        urlValidarPermiso=dataConfig['url-backend-security']+"permiso-rol/validar-permiso/rol/"+idRol
+        urlValidarPermiso=dataConfig['url-backend-registraduriasecurity']+"/permiso-rol/validar-permiso/rol/"+idRol
         headers = {"Content-Type": "application/json"}
 
         bodyRequest = {
@@ -64,7 +64,7 @@ def transformarUrl(urlCliente):
     return urlCliente
 @app.route("/login", methods=['POST'])
 def validarUsuario():
-    url= dataConfig['url-backend-registraduriasecurity']+"/usuariovalidar-usuario"
+    url= dataConfig['url-backend-registraduriasecurity']+"/usuario/validar-usuario"
 
     headers={ "Content-Type":"application/json" }
     bodyRequest= request.get_json()
@@ -75,7 +75,7 @@ def validarUsuario():
         infoUsuario= response.json()
 
         tiempoToken= datetime.timedelta(seconds=60*60)
-        newToken = create_access_token(identity=infoUsuario, expire_delta=tiempoToken)
+        newToken = create_access_token(identity=infoUsuario, expires_delta=tiempoToken)
 
         return {"token":newToken}
     else:

@@ -1,6 +1,6 @@
 {
   "url-backend": "127.0.0.1",
   "port": 7777,
-  "url-backend-registraduriasecurity": "http://127.0.0.1:8080",
-  "url-backend-registraduria": "http://127.0.0.1:9999"
+  "url-backend-registraduriasecurity": "https://registraduriaseguridad.onrender.com",
+  "url-backend-registraduria": "https://registraduriamodulos.onrender.com"
 }
