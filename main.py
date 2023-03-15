@@ -32,6 +32,7 @@ def middleware():
         pass
     else:
         print("aqui se valida token")
+
         verify_jwt_in_request()
         #para validar los rol
         infoToken= get_jwt_identity()
@@ -39,10 +40,10 @@ def middleware():
 
         #  cambia numeros de la url por ?
         urlCliente =transformarUrl(urlCliente)
-        
+
         urlValidarPermiso=dataConfig['url-backend-registraduriasecurity']+"/permiso-rol/validar-permiso/rol/"+idRol
         headers = {"Content-Type": "application/json"}
-
+        print(urlCliente)
         bodyRequest = {
             "url":urlCliente,
             "metodo":metodoCliente
