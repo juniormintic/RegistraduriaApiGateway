@@ -15,7 +15,8 @@ import requests
 import re
 
 app=Flask(__name__)
-cors=CORS(app)
+# control de cors info en la documentacion  flask cors
+cors = CORS(app, resources={r"*": {"origins": "*"}})
                             #mi contraseña
 app.config["JWT_SECRET_KEY"]="super-secret" #Cambiar por el que se conveniente
 jwt = JWTManager(app)
