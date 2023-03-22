@@ -71,7 +71,7 @@ def validarUsuario():
     headers={ "Content-Type":"application/json" }
     bodyRequest= request.get_json()
     response = requests.post(url, json=bodyRequest, headers=headers)
-
+    print(response.status_code)
     if(response.status_code==200):
         print("el usuario se valido correctamente")
         infoUsuario= response.json()
