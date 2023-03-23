@@ -50,8 +50,7 @@ def middleware():
         #  cambia numeros de la url por ?
         urlCliente = transformarUrl(urlCliente)
 
-        urlValidarPermiso = dataConfig[
-                                'url-backend-registraduriasecurity'] + "/permiso-rol/validar-permiso/rol/" + idRol
+        urlValidarPermiso = dataConfig['url-backend-registraduriasecurity'] + "/permiso-rol/validar-permiso/rol/" + idRol
         headers = {"Content-Type": "application/json"}
         print(urlCliente)
         bodyRequest = {
@@ -294,6 +293,15 @@ def asignarPartidoCandidato(idCandidato, idPartido):
     response = requests.put(url, headers=headers)
     return response.json()
 
+
+
+@app.route("/candidato", methods=['GET'])
+# la funcion recibe la cedula del candidato
+def listarCandidato():
+    url = dataConfig['url-backend-registraduria'] + "/candidato/"
+    headers = {"Content-Type": "application/json"}
+    response = requests.get(url, headers=headers)
+    return response.json()
 
 # ruta que recibe un valor para buscar candidato
 @app.route("/candidato/<string:cedula>", methods=['GET'])
