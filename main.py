@@ -21,11 +21,6 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Cambiar por el que se conveniente
 jwt = JWTManager(app)
 
-def loadFileConfig():
-    with open('config.json') as f:
-        data = json.load(f)
-    return data
-dataConfig = loadFileConfig()
 
 
 
@@ -478,9 +473,13 @@ def eliminarMesa(idMesa):
 # fin rutas mesa
 # ==================================================================
 
-
+def loadFileConfig():
+    with open('config.json') as f:
+        data = json.load(f)
+    return data
 
 
 if __name__ == '__main__':
+    dataConfig = loadFileConfig()
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
     serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
