@@ -293,7 +293,7 @@ def asignarPartidoCandidato(idCandidato, idPartido):
 @app.route("/candidato", methods=['GET'])
 # la funcion recibe la cedula del candidato
 def listarCandidato():
-    url = dataConfig['url-backend-registraduria'] + "/candidato"
+    url = dataConfig['url-backend-registraduria'] + "/candidato/"
     headers = {"Content-Type": "application/json"}
     response = requests.get(url, headers=headers)
     return response.json()
