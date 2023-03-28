@@ -31,6 +31,7 @@ dataConfig = loadFileConfig()
 
 # para que sea la primera en ejecutarce
 @app.before_request
+@jwt_required()
 def middleware():
     print("Entro al middleware!!")
     urlCliente = request.path
