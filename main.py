@@ -16,7 +16,7 @@ import re
 
 app = Flask(__name__)
 # control de cors info en la documentacion  flask cors
-cors = CORS(app, resources={r"*": {"origins": "https://registraduriafront.onrender.com/*"}})
+cors = CORS(app, resources={r"*": {"origins": "https://registraduriafront.onrender.com"}})
 # mi contraseña
 app.config["JWT_SECRET_KEY"] = "super-secret"  # Cambiar por el que se conveniente
 jwt = JWTManager(app)
@@ -298,7 +298,7 @@ def asignarPartidoCandidato(idCandidato, idPartido):
 @app.route("/candidato", methods=['GET'])
 # la funcion recibe la cedula del candidato
 def listarCandidato():
-    url = dataConfig['url-backend-registraduria'] + "/candidato/"
+    url = dataConfig['url-backend-registraduria'] + "/candidato"
     headers = {"Content-Type": "application/json"}
     response = requests.get(url, headers=headers)
     return response.json()
