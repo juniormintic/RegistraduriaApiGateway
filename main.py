@@ -21,6 +21,12 @@ from flask_jwt_extended import JWTManager
 app.config["JWT_SECRET_KEY"]="super-secret" #Cambiar por el que sea conveniente
 jwt = JWTManager(app)
 
+
+def loadFileConfig():
+    with open('config.json') as f:
+        data = json.load(f)
+    return data
+dataConfig = loadFileConfig()
 @app.route("/login", methods=['POST'])
 def validarUsuario():
     url = dataConfig['url-backend-registraduriasecurity'] + "/usuario/validar-usuario"
@@ -470,13 +476,9 @@ def eliminarMesa(idMesa):
 
 # fin rutas mesa
 # ==================================================================
-def loadFileConfig():
-    with open('config.json') as f:
-        data = json.load(f)
-    return data
 
 
 if __name__ == '__main__':
-    dataConfig = loadFileConfig()
+
     print("Server running : " + "http://" + dataConfig["url-backend"] + ":" + str(dataConfig["port"]))
     serve(app, host=dataConfig["url-backend"], port=dataConfig["port"])
